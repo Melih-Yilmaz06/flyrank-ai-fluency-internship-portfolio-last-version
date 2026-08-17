@@ -28,6 +28,16 @@
   </script>
   <link rel="stylesheet" href="ai-agent.css" />
   <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
     body {
       background-image: url('Site Arka Plan Kabul Edilen.png');
       background-size: cover;
@@ -38,6 +48,11 @@
 
     html {
       scroll-behavior: smooth;
+    }
+
+    img, svg, video, canvas, iframe {
+      max-width: 100%;
+      height: auto;
     }
 
     .project-card {
@@ -100,6 +115,56 @@
       transform: translateY(-1px);
       box-shadow: 0 4px 14px rgba(220, 38, 38, 0.25);
     }
+
+    /* Mobile Navigation Drawer */
+    @media (max-width: 768px) {
+      .nav-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(17, 24, 39, 0.1);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.25rem 1.5rem;
+        gap: 1.25rem;
+        box-shadow: 0 10px 25px -5px rgba(17, 24, 39, 0.08);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-8px);
+        transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+        pointer-events: none;
+      }
+
+      .nav-menu.open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+
+      .nav-menu .nav-link {
+        width: 100%;
+        padding: 0.5rem 0;
+        font-size: 1rem;
+        border-bottom: 1px solid rgba(17, 24, 39, 0.05);
+      }
+
+      /* Hamburger transform to 'X' */
+      #mobileMenuBtn.is-active .hamburger-line:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+      }
+      #mobileMenuBtn.is-active .hamburger-line:nth-child(2) {
+        opacity: 0;
+      }
+      #mobileMenuBtn.is-active .hamburger-line:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+      }
+    }
   </style>
 </head>
 
@@ -107,13 +172,29 @@
 
   <!-- NAV -->
   <header class="border-b border-ink/10 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-6 flex items-center justify-between h-16">
+    <div class="max-w-6xl mx-auto px-6 flex items-center justify-between h-16 relative">
       <a href="index.html" class="font-display font-semibold text-xl tracking-tight">
         Melih Yılmaz
       </a>
-      <nav class="flex items-center gap-8 text-sm font-medium">
-        <a href="#featured-work" class="hover:text-accent transition-colors">Projects</a>
-        <a href="#contact" class="hover:text-accent transition-colors">Contact</a>
+
+      <!-- Mobile Hamburger Button (<= 768px) -->
+      <button 
+        id="mobileMenuBtn"
+        type="button"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="navMenu"
+        class="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded text-ink hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent/50 transition-colors"
+      >
+        <span class="hamburger-line block w-5 h-0.5 bg-current transition-transform duration-300 ease-in-out"></span>
+        <span class="hamburger-line block w-5 h-0.5 bg-current mt-1.5 transition-opacity duration-300 ease-in-out"></span>
+        <span class="hamburger-line block w-5 h-0.5 bg-current mt-1.5 transition-transform duration-300 ease-in-out"></span>
+      </button>
+
+      <!-- Navigation Links -->
+      <nav id="navMenu" class="nav-menu flex items-center gap-8 text-sm font-medium">
+        <a href="#featured-work" class="nav-link hover:text-accent transition-colors">Projects</a>
+        <a href="#contact" class="nav-link hover:text-accent transition-colors">Contact</a>
       </nav>
     </div>
   </header>
@@ -147,7 +228,7 @@
           <div class="lg:col-span-5">
             <div class="relative aspect-[4/5] w-full max-w-sm mx-auto lg:mx-0">
               <div class="absolute inset-0 border-2 border-ink/15 translate-x-3 translate-y-3"></div>
-              <img src="PP.jpeg" alt="Melih Yılmaz" class="relative h-full w-full object-cover border-2 border-ink" />
+              <img src="PP.jpeg" alt="Melih Yılmaz" fetchpriority="high" class="relative h-full w-full object-cover border-2 border-ink" />
             </div>
           </div>
         </div>
@@ -161,9 +242,9 @@
         <h2 class="font-display text-3xl font-semibold tracking-tight">Şefim Temiz</h2>
       </div>
       <div
-        class="project-card flex flex-col lg:flex-row gap-10 border border-ink/10 bg-white/60 backdrop-blur-sm p-8 lg:p-10 rounded-sm">
+        class="project-card flex flex-col lg:flex-row gap-10 border border-ink/10 bg-white/60 backdrop-blur-sm p-5 sm:p-8 lg:p-10 rounded-sm">
         <div class="lg:w-2/5 shrink-0">
-          <img src="Şefim Temiz Tasarım.jpeg" alt="Şefim Temiz PRO dashboard"
+          <img src="Şefim Temiz Tasarım.jpeg" alt="Şefim Temiz PRO dashboard" loading="lazy" decoding="async"
             class="w-full aspect-video object-cover object-top border-2 border-ink rounded-sm" />
         </div>
         <div class="flex flex-col justify-center">
@@ -189,7 +270,7 @@
 
       <!-- TEASER: Gözlük -->
       <div
-        class="teaser-card mt-10 border-2 border-dashed border-ink/15 bg-ink/[0.03] backdrop-blur-sm rounded-sm p-8 lg:p-10 opacity-80 hover:opacity-100 transition-opacity duration-500">
+        class="teaser-card mt-10 border-2 border-dashed border-ink/15 bg-ink/[0.03] backdrop-blur-sm rounded-sm p-5 sm:p-8 lg:p-10 opacity-80 hover:opacity-100 transition-opacity duration-500">
         <div class="flex flex-col sm:flex-row sm:items-center gap-4 mb-5">
           <h3 class="font-display text-2xl font-semibold tracking-tight text-ink/70">Gözlük</h3>
           <div class="flex items-center gap-2">
@@ -220,11 +301,11 @@
             together</h2>
         </div>
         <div
-          class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start bg-white/60 backdrop-blur-sm border border-ink/10 rounded-sm p-8 sm:p-10 lg:p-12">
+          class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start bg-white/60 backdrop-blur-sm border border-ink/10 rounded-sm p-5 sm:p-8 lg:p-12">
           <!-- Left: Contact Details & Links -->
           <div class="lg:col-span-5 space-y-6">
             <div class="flex items-center gap-4 mb-2">
-              <img src="Site Logo.png" alt="Site Logo" class="w-14 h-auto object-contain opacity-90" />
+              <img src="Site Logo.png" alt="Site Logo" loading="lazy" decoding="async" class="w-14 h-auto object-contain opacity-90" />
               <div>
                 <p class="font-display font-semibold text-lg text-ink">Melih Yılmaz</p>
                 <p class="text-xs text-ink/60">Software Engineer</p>
@@ -384,6 +465,49 @@
             }
           }, 6000);
         }
+      });
+    }
+  </script>
+
+  <!-- Mobile Navigation Toggle Script -->
+  <script>
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navMenu = document.getElementById('navMenu');
+
+    if (mobileMenuBtn && navMenu) {
+      const toggleMenu = () => {
+        const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
+        mobileMenuBtn.setAttribute('aria-expanded', !isExpanded);
+        mobileMenuBtn.classList.toggle('is-active');
+        navMenu.classList.toggle('open');
+      };
+
+      const closeMenu = () => {
+        mobileMenuBtn.setAttribute('aria-expanded', 'false');
+        mobileMenuBtn.classList.remove('is-active');
+        navMenu.classList.remove('open');
+      };
+
+      mobileMenuBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleMenu();
+      });
+
+      // Close when clicking any nav item
+      navMenu.querySelectorAll('.nav-link').forEach((link) => {
+        link.addEventListener('click', closeMenu);
+      });
+
+      // Close when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!navMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+          closeMenu();
+        }
+      });
+
+      // Close on ESC key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeMenu();
       });
     }
   </script>

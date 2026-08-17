@@ -29,6 +29,16 @@
   </script>
   <link rel="stylesheet" href="ai-agent.css" />
   <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
     body {
       background-image: url('Site Arka Plan Kabul Edilen.png');
       background-size: cover;
@@ -40,6 +50,61 @@
     html {
       scroll-behavior: smooth;
     }
+
+    img, svg, video, canvas, iframe {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Mobile Navigation Drawer */
+    @media (max-width: 768px) {
+      .nav-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(17, 24, 39, 0.1);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.25rem 1.5rem;
+        gap: 1.25rem;
+        box-shadow: 0 10px 25px -5px rgba(17, 24, 39, 0.08);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-8px);
+        transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+        pointer-events: none;
+      }
+
+      .nav-menu.open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+
+      .nav-menu .nav-link {
+        width: 100%;
+        padding: 0.5rem 0;
+        font-size: 1rem;
+        border-bottom: 1px solid rgba(17, 24, 39, 0.05);
+      }
+
+      /* Hamburger transform to 'X' */
+      #mobileMenuBtn.is-active .hamburger-line:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+      }
+      #mobileMenuBtn.is-active .hamburger-line:nth-child(2) {
+        opacity: 0;
+      }
+      #mobileMenuBtn.is-active .hamburger-line:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+      }
+    }
   </style>
 </head>
 
@@ -47,13 +112,29 @@
 
   <!-- NAV -->
   <header class="border-b border-ink/10 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-6 flex items-center justify-between h-16">
+    <div class="max-w-6xl mx-auto px-6 flex items-center justify-between h-16 relative">
       <a href="index.html" class="font-display font-semibold text-xl tracking-tight">
         Melih Yılmaz
       </a>
-      <nav class="flex items-center gap-8 text-sm font-medium">
-        <a href="index.html#featured-work" class="hover:text-accent transition-colors">Projects</a>
-        <a href="index.html#contact" class="hover:text-accent transition-colors">Contact</a>
+
+      <!-- Mobile Hamburger Button (<= 768px) -->
+      <button 
+        id="mobileMenuBtn"
+        type="button"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="navMenu"
+        class="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded text-ink hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent/50 transition-colors"
+      >
+        <span class="hamburger-line block w-5 h-0.5 bg-current transition-transform duration-300 ease-in-out"></span>
+        <span class="hamburger-line block w-5 h-0.5 bg-current mt-1.5 transition-opacity duration-300 ease-in-out"></span>
+        <span class="hamburger-line block w-5 h-0.5 bg-current mt-1.5 transition-transform duration-300 ease-in-out"></span>
+      </button>
+
+      <!-- Navigation Links -->
+      <nav id="navMenu" class="nav-menu flex items-center gap-8 text-sm font-medium">
+        <a href="index.html#featured-work" class="nav-link hover:text-accent transition-colors">Projects</a>
+        <a href="index.html#contact" class="nav-link hover:text-accent transition-colors">Contact</a>
       </nav>
     </div>
   </header>
@@ -87,6 +168,7 @@
       <div class="border border-ink/10 bg-white/60 backdrop-blur-sm rounded-sm overflow-hidden">
         <img src="Şefim Temiz Tasarım.jpeg"
           alt="Şefim Temiz PRO dashboard — live camera feed, violation stats, and real-time alert log"
+          loading="lazy" decoding="async"
           class="w-full object-cover" />
       </div>
     </section>
@@ -173,6 +255,49 @@
       <p>&copy; 2026 — Built with engineering discipline.</p>
     </div>
   </footer>
+
+  <!-- Mobile Navigation Toggle Script -->
+  <script>
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navMenu = document.getElementById('navMenu');
+
+    if (mobileMenuBtn && navMenu) {
+      const toggleMenu = () => {
+        const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
+        mobileMenuBtn.setAttribute('aria-expanded', !isExpanded);
+        mobileMenuBtn.classList.toggle('is-active');
+        navMenu.classList.toggle('open');
+      };
+
+      const closeMenu = () => {
+        mobileMenuBtn.setAttribute('aria-expanded', 'false');
+        mobileMenuBtn.classList.remove('is-active');
+        navMenu.classList.remove('open');
+      };
+
+      mobileMenuBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleMenu();
+      });
+
+      // Close when clicking any nav item
+      navMenu.querySelectorAll('.nav-link').forEach((link) => {
+        link.addEventListener('click', closeMenu);
+      });
+
+      // Close when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!navMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+          closeMenu();
+        }
+      });
+
+      // Close on ESC key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeMenu();
+      });
+    }
+  </script>
 
   <!-- In-Browser Personal AI Agent (Edge AI) -->
   <script type="module" src="ai-agent.js"></script>
