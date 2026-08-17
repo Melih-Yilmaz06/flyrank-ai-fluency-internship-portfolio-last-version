@@ -4,8 +4,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Melih Yılmaz</title>
-  <meta name="description" content="Melih Yılmaz — Software Engineer portfolio." />
+
+  <!-- Temel SEO Etiketleri -->
+  <title>Melih Yılmaz | Software Engineer</title>
+  <meta name="description" content="Personal portfolio website of Melih Yılmaz. Discover my software engineering projects" />
+  <meta name="author" content="Melih Yılmaz" />
+
+  <!-- Open Graph / Sosyal Medya (WhatsApp, LinkedIn, vb. Paylaşımları İçin) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://melihyilmaz.vercel.app/" />
+  <meta property="og:title" content="Melih Yılmaz | Software Engineer" />
+  <meta property="og:description" content="Personal portfolio website of Melih Yılmaz. Discover my software engineering projects" />
+  <meta property="og:image" content="https://melihyilmaz.vercel.app/Site%20Logo.png" />
+
+  <!-- Twitter Card -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://melihyilmaz.vercel.app/" />
+  <meta property="twitter:title" content="Melih Yılmaz | Software Engineer" />
+  <meta property="twitter:description" content="Personal portfolio website of Melih Yılmaz. Discover my software engineering projects" />
+  <meta property="twitter:image" content="https://melihyilmaz.vercel.app/Site%20Logo.png" />
+
   <link rel="icon" href="Site Logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -363,7 +381,7 @@
 
           <!-- Right: Contact Form -->
           <div class="lg:col-span-7">
-            <form id="contactForm" class="space-y-4">
+            <form id="contactForm" novalidate class="space-y-4">
               <!-- Web3Forms Access Key -->
               <input type="hidden" name="access_key" value="c6ab8738-2729-4f00-9239-34456983222a" />
               <input type="hidden" name="subject" value="New Message from Portfolio Contact Form" />
@@ -377,7 +395,7 @@
 
               <div>
                 <label for="email" class="block text-xs font-semibold uppercase tracking-wider text-ink/70 mb-1 font-display">Email</label>
-                <input type="email" id="email" name="email" required placeholder="your.email@example.com"
+                <input type="email" id="email" name="email" required placeholder="your.name@gmail.com"
                   class="w-full px-4 py-2.5 bg-white/80 border border-ink/15 rounded-sm text-sm text-ink placeholder-ink/40 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors" />
               </div>
 
@@ -417,10 +435,50 @@
     const contactForm = document.getElementById('contactForm');
     const submitBtn = document.getElementById('submitBtn');
     const formStatus = document.getElementById('formStatus');
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const messageInput = document.getElementById('message');
 
     if (contactForm) {
       contactForm.addEventListener('submit', async function (e) {
         e.preventDefault();
+
+        const nameVal = nameInput ? nameInput.value.trim() : '';
+        const emailVal = emailInput ? emailInput.value.trim() : '';
+        const messageVal = messageInput ? messageInput.value.trim() : '';
+
+        // Validation 1: Check name is not empty
+        if (!nameVal) {
+          formStatus.className = 'text-sm font-medium text-center text-accent';
+          formStatus.innerText = 'Please enter your name.';
+          if (nameInput) nameInput.focus();
+          return;
+        }
+
+        // Validation 2: Email must not be empty
+        if (!emailVal) {
+          formStatus.className = 'text-sm font-medium text-center text-accent';
+          formStatus.innerText = 'Please enter your email.';
+          if (emailInput) emailInput.focus();
+          return;
+        }
+
+        // Validation 3: Email must end with @gmail.com
+        const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/i;
+        if (!gmailRegex.test(emailVal)) {
+          formStatus.className = 'text-sm font-medium text-center text-accent';
+          formStatus.innerText = 'Please enter a valid Gmail address ending with @gmail.com.';
+          if (emailInput) emailInput.focus();
+          return;
+        }
+
+        // Validation 4: Message must not be empty
+        if (!messageVal) {
+          formStatus.className = 'text-sm font-medium text-center text-accent';
+          formStatus.innerText = 'Please enter your message.';
+          if (messageInput) messageInput.focus();
+          return;
+        }
 
         submitBtn.disabled = true;
         const originalBtnText = submitBtn.innerHTML;
@@ -429,6 +487,10 @@
         formStatus.innerText = 'Sending your message...';
 
         const formData = new FormData(contactForm);
+        formData.set('name', nameVal);
+        formData.set('email', emailVal);
+        formData.set('message', messageVal);
+
         const object = Object.fromEntries(formData);
         const json = JSON.stringify(object);
 
