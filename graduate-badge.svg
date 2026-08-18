@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 170 38" fill="none" width="170" height="38">
+  <defs>
+    <linearGradient id="badge-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#051F21" />
+      <stop offset="100%" stop-color="#0B2E31" />
+    </linearGradient>
+    <linearGradient id="mint-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#54E399" />
+      <stop offset="100%" stop-color="#2ED573" />
+    </linearGradient>
+  </defs>
+
+  <!-- Container Box -->
+  <rect x="0.5" y="0.5" width="169" height="37" rx="7" fill="url(#badge-bg)" stroke="#54E399" stroke-opacity="0.35" stroke-width="1"/>
+
+  <!-- Left Icon Emblem -->
+  <g transform="translate(10, 8)">
+    <rect width="22" height="22" rx="5" fill="#54E399" fill-opacity="0.15" />
+    <path d="M6 14.5L11 7L16 14.5H6Z" fill="url(#mint-glow)" />
+    <circle cx="11" cy="11.5" r="2" fill="#051F21" />
+  </g>
+
+  <!-- Typography -->
+  <!-- Label -->
+  <text x="38" y="16" fill="#54E399" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="8" font-weight="700" letter-spacing="1">FLYRANK AI</text>
+  <!-- Value -->
+  <text x="38" y="27" fill="#FFFFFF" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10.5" font-weight="700" letter-spacing="0.4">GRADUATE</text>
+
+  <!-- Verified Checkmark Badge on Right -->
+  <g transform="translate(144, 11)">
+    <circle cx="8" cy="8" r="7.5" fill="#54E399" fill-opacity="0.2" stroke="#54E399" stroke-width="0.8"/>
+    <path d="M5 8L7.2 10.2L11 6" stroke="#54E399" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+</svg>

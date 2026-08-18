@@ -228,9 +228,19 @@
       </button>
 
       <!-- Navigation Links -->
-      <nav id="navMenu" class="nav-menu flex items-center gap-8 text-sm font-medium">
+      <nav id="navMenu" class="nav-menu flex items-center gap-6 md:gap-8 text-sm font-medium">
         <a href="#featured-work" class="nav-link hover:text-accent transition-colors">Projects</a>
         <a href="#contact" class="nav-link hover:text-accent transition-colors">Contact</a>
+        <a href="MelihCV_V3.pdf" download class="nav-link hover:text-accent transition-colors">CV</a>
+        <!-- FlyRank Graduate Badge (Navbar) -->
+        <a href="https://internship.flyrank.ai/intern/application/f37312b2-139e-4a7f-990f-00b313852f56" target="_blank"
+          rel="noopener noreferrer"
+          class="nav-link inline-flex items-center transition-transform duration-300 hover:scale-105"
+          aria-label="Verify FlyRank Graduate Certification">
+          <img src="graduate-badge.svg"
+            onerror="this.onerror=null; this.src='https://aifluency.flyrank.ai/assets/badges/graduate-badge.svg';"
+            alt="FlyRank Graduate Badge" class="h-8 w-auto object-contain" />
+        </a>
       </nav>
     </div>
   </header>
@@ -444,12 +454,23 @@
 
   <!-- FOOTER -->
   <footer class="border-t border-ink/10 bg-white/60 backdrop-blur-sm">
-    <div
-      class="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-ink/50">
-      <p>&copy; 2026 — Built with engineering discipline.</p>
-      <nav class="flex items-center gap-6 text-xs font-medium text-ink/50">
-        <a href="MelihCV_V3.pdf" download class="hover:text-accent transition-colors">CV</a>
-      </nav>
+    <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col items-center gap-6 text-xs text-ink/50">
+      <!-- FlyRank Graduate Badge (Footer) -->
+      <a href="https://internship.flyrank.ai/" target="_blank" rel="noopener noreferrer"
+        class="inline-flex items-center transition-transform duration-300 hover:scale-105"
+        aria-label="Verify FlyRank Graduate Certification">
+        <img src="graduate-badge.svg"
+          onerror="this.onerror=null; this.src='https://aifluency.flyrank.ai/assets/badges/graduate-badge.svg';"
+          alt="FlyRank Graduate Badge" class="h-10 w-auto object-contain" />
+      </a>
+
+      <!-- Copyright & Links -->
+      <div class="w-full flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-ink/5 pt-4">
+        <p>&copy; 2026 — Built with engineering discipline.</p>
+        <nav class="flex items-center gap-6 text-xs font-medium text-ink/50">
+          <a href="MelihCV_V3.pdf" download class="hover:text-accent transition-colors">CV</a>
+        </nav>
+      </div>
     </div>
   </footer>
 
